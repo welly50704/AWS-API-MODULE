@@ -68,7 +68,7 @@ def detect_face_eqp(client, count=1):
     '''
     rekresp['Persons'][0]['BodyParts'][indices]["EquipmentDetections"]
 
-    different indices can check different position' equipment.
+    different indices can check different position' equipment. ###在全部部位都有被偵測到時才成立，因此會做大改########
     indices = 0 : FACE
     indices = 1 :LEFT_HAND
     indices = 2 :RIGHT_HANDx
