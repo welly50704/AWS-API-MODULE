@@ -71,7 +71,7 @@ def detect_face_eqp(client, count=1):
     different indices can check different position' equipment.
     indices = 0 : FACE
     indices = 1 :LEFT_HAND
-    indices = 2 :RIGHT_HAND
+    indices = 2 :RIGHT_HANDx
     indices = 3 :HEAD
 
     '''
@@ -80,15 +80,48 @@ def detect_face_eqp(client, count=1):
     return dt_face_eqp
 
 # if have equipment on head, it will return true.
+# if someone doesn't have equipment on head, it will print his Id and return false.
 def detect_head_eqp(client, count=1):
-
-        imgfilename = 'E:/Cloud/OneDrive/課/人工智慧/pic/'+str(count)+'.jpg'
+    no_eqp_list = []
+    imgfilename = 'E:/Cloud/OneDrive/課/人工智慧/pic/'+str(count)+'.jpg'
     with open(imgfilename, 'rb') as imgfile:
         imgbytes = imgfile.read()
     rekresp = client.detect_protective_equipment(Image={'Bytes': imgbytes}, 
         SummarizationAttributes={'MinConfidence':80, 'RequiredEquipmentTypes':['FACE_COVER', 'HAND_COVER', 'HEAD_COVER']})
 
-    dt_head_eqp = rekresp['Persons'][0]['BodyParts'][3]["EquipmentDetections"]
-    
-    return dt_head_eqp
+    persons = rekresp['Persons']
+    for person in persons:
+        Id = person['Id']
+        print(Id)
 
+        body_parts = person['BodyParts']
+
+        if len(body_parts) == 0:
+            print('\t\tNo body_part detected')
+            
+        else:
+            for body_part in body_parts:
+                # check have detected head.
+                if body_part['Name'] == 'HEAD':  
+                    ppe_items = body_part['EquipmentDetections']
+                    
+                    if not ppe_items:
+                        
+                        no_eqp_list.append(Id)
+                        print(f'{Id}, not have head_epq')
+                        
+
+                    for ppe_item in ppe_items:
+                        head_eqp = ppe_item['CoversBodyPart']['Value']
+                        
+                        if head_eqp == 'False':
+                            no_eqp_list.append(Id)
+                            print(f'{Id}, not have head_epq')
+                           
+    if len(no_eqp_list) != 0:
+        print('以下這些Id可能沒戴安全帽:')
+        for number in no_eqp_list:
+            print(f'Id:{number} ')
+        return False
+    else:
+        return True
