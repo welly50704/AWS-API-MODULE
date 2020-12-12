@@ -1,3 +1,5 @@
+##此module為讀取本機檔案版，因此輸入的檔案位置需要自行調整 3Q
+
 # 讀取本機檔案識別
 # 檔名預設從1開始
 # 辨識臉部
@@ -15,7 +17,7 @@ def rekog(client, count = 1):
 # 如要計數，需要建立dict用以計數
 # 辨識情緒並計數
 def emotions(client, count = 1):
-
+    
     imgfilename = 'E:/Cloud/OneDrive/課/人工智慧/pic/'+str(count)+'.jpg'
     with open(imgfilename, 'rb') as imgfile:
         imgbytes = imgfile.read()
