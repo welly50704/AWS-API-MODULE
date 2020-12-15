@@ -12,14 +12,17 @@ def rekog(client, imgfilename):
 
 #辨識情緒並回傳情緒
 def emotions(client, imgfilename):
-    
+    emotion = []
     with open(imgfilename, 'rb') as imgfile:
         imgbytes = imgfile.read()
-    rekresp = client.detect_faces(Image={'Bytes': imgbytes}, Attributes=['ALL'])
-    rekfd = rekresp['FaceDetails'][0]
-    
-    emotion = rekfd['Emotions'][0]['Type']
-    
+    try:
+        rekresp = client.detect_faces(Image={'Bytes': imgbytes}, Attributes=['ALL'])
+        rekfd = rekresp['FaceDetails'][0]
+        
+        emotion = rekfd['Emotions'][0]['Type']
+    except IndexError:
+        print('沒偵測到臉部!')
+        
     return emotion
 
 # 讀取本機檔案識別
