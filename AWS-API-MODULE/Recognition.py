@@ -149,15 +149,18 @@ class FaceDetails:
 
         self.response = client.detect_faces(Image={'Bytes': self.imgbytes}, Attributes=['ALL'])
         self.response_data = self.response
-        self.rekfd = self.response_data['FaceDetails'][0]
-
+        try:
+            self.rekfd = self.response_data['FaceDetails'][0]
+        except IndexError:
+            print('偵測不到臉部!')
+            
     def emotion(self):
 
         try:
             self.emotion = self.rekfd['Emotions'][0]['Type']
             return self.emotion
 
-        except IndexError:
+        except (IndexError, AttributeError):
             print('沒偵測到臉部!')
 
 # This function will return the number of people
@@ -181,10 +184,13 @@ class FaceDetails:
     def age(self):
 
         self.age_list = []
+        try:
+            for self.rd in self.response_data['FaceDetails']:
+                self.age = self.rd['AgeRange']
+                self.age_list.append(self.age)
 
-        for self.rd in self.response_data['FaceDetails']:
-            self.age = self.rd['AgeRange']
-            self.age_list.append(self.age)
+        except (NameError, IndexError):
+            print('沒有偵測到臉部!無法判斷年齡')
 
         return self.age_list
     
