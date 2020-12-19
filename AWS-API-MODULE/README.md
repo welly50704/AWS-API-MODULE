@@ -10,3 +10,18 @@ AWS-API-MODEL
 2.imgfilename參數為檔案路徑
 
 需要注意一下回傳的值為何!大部分都為bool或list,再依你的需求做使用
+
+class:1.DetectPPE 2.FaceDetails
+
+  1.DetectPPE
+    1.a. detect_hand_eqp
+    1.b. detect_face_eqp
+    1.c. detect_head_eqp 
+
+  2.FaceDetails
+    2.a emotion
+    2.b count_face
+    2.c eyes_open
+    2.d age
+    2.e smile
+    2.f mouth_open
