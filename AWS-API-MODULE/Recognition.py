@@ -140,45 +140,6 @@ class DetectPPE:
         else:
             return True, self.no_eqp_list
 
-    def detect_face_eqp(self):
-
-            self.no_eqp_list = []
-
-            self.persons = self.response_data['Persons']
-
-            for self.person in self.persons:
-                self.Id = self.person['Id']
-                self.body_parts = self.person['BodyParts']
-
-                if len(self.body_parts) == 0:
-                    print(f'{self.Id}:No body_part detected')
-                    
-                else:
-                    for self.body_part in self.body_parts:
-                        # check have detected head.
-                        if self.body_part['Name'] == 'FACE':  
-                            self.ppe_items = self.body_part['EquipmentDetections']
-                            
-                            if not self.ppe_items:                               
-                                self.no_eqp_list.append(self.Id)
-                                print(f'{self.Id}, not have face_epq')
-                                
-
-                            for self.ppe_item in self.ppe_items:
-                                self.head_eqp = self.ppe_item['CoversBodyPart']['Value']
-                                
-                                if self.head_eqp == 'False':
-                                    self.no_eqp_list.append(self.Id)
-                                    print(f'{self.Id}, not have face_epq')
-                                
-            if len(self.no_eqp_list) != 0:               
-                return False, self.no_eqp_list
-
-            else:
-                return True, self.no_eqp_list
-
-
-
 
 class FaceDetails:
     def __init__(self, client, imgfilename):
