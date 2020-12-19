@@ -18,7 +18,7 @@ class FaceDetails:
             return self.emotion
         except IndexError:
             print('沒偵測到臉部!')
-# This founction will return the number of people
+# This function will return the number of people
     def count_face(self):
         print(self.rekfd)
         return (len(self.rekfd))
