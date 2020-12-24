@@ -11,7 +11,7 @@ class DetectPPE:
         self.response_data = self.response  
 
     # if have equipment on head, it will return true.
-# if someone doesn't have equipment on head, it will print his Id and return false.def detect_head_eqp(client, imgfilename):
+# if someone doesn't have equipment on head, it will print his Id and return false.
     def detect_hand_eqp(self):
 
         self.right_hand_list = []
